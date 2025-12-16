@@ -1,79 +1,87 @@
-Backup de Banco de Dados Supabase com GitHub Actions
-Este repositório oferece uma maneira prática de automatizar os backups do seu banco de dados Supabase usando GitHub Actions. Ele cria backups diários das permissões (roles), esquema (schema) e dados do seu banco, armazenando-os diretamente no seu repositório. Também inclui um mecanismo para restaurar facilmente o banco de dados caso algo dê errado.
+# Backup do Banco de Dados Supabase com GitHub Actions
 
-Funcionalidades
-Backups Diários Automáticos: Agendados para rodar todos os dias à meia-noite.
+Este repositório oferece uma maneira simples de automatizar backups do seu banco de dados Supabase usando GitHub Actions. Ele cria backups diários das funções (roles), esquema (schema) e dados do seu banco de dados, e os armazena no seu repositório. Ele também inclui um mecanismo para restaurar facilmente seu banco de dados caso algo dê errado.
 
-Separação de Roles, Schema e Dados: Cria arquivos de backup modulares para facilitar a organização.
+---
 
-Controle de Fluxo Flexível: Ative ou desative os backups através de uma simples variável de ambiente.
+## Funcionalidades
 
-Integração com GitHub Actions: Utiliza a infraestrutura gratuita e confiável do GitHub para automação.
+- **Backups Diários Automáticos:** Backups agendados são executados todos os dias à meia-noite.
+- **Separação de Funções, Esquema e Dados:** Cria arquivos de backup modulares para funções, esquema e dados.
+- **Controle Flexível do Fluxo de Trabalho:** Habilite ou desabilite backups com uma simples variável de ambiente.
+- **Integração com GitHub Actions:** Utiliza o GitHub Actions, gratuito e confiável, para automação.
+- **Restauração Fácil do Banco de Dados:** Passos claros para restaurar seu banco de dados a partir dos backups.
 
-Restauração Facilitada: Passos claros para recuperar seu banco de dados a partir dos arquivos de backup.
+---
 
-Como Começar
-1. Configurar Variáveis no Repositório
-Vá nas configurações do seu repositório e navegue até Actions > Variables. Adicione o seguinte:
+## Primeiros Passos
 
-Secrets (Segredos):
+### 1. **Configurar Variáveis do Repositório**
 
-SUPABASE_DB_URL: Sua string de conexão PostgreSQL do Supabase. Formato:
+Vá para as configurações do seu repositório e navegue até **Actions > Variables**. Adicione o seguinte:
 
-postgresql://<USUÁRIO>:<SENHA>@<HOST>:5432/postgres
+- **Secrets (Segredos):**
 
-Variables (Variáveis):
+  - `SUPABASE_DB_URL`: Sua string de conexão PostgreSQL do Supabase. Formato:  
+    `postgresql://<USER>:<PASSWORD>@<HOST>:5432/postgres`
 
-BACKUP_ENABLED: Defina como true para ativar os backups ou false para desativá-los.
+- **Variables (Variáveis):**
+  - `BACKUP_ENABLED`: Defina como `true` para habilitar os backups ou `false` para desabilitá-los.
 
-2. Como o Fluxo de Trabalho (Workflow) Funciona
-O workflow do GitHub Actions é acionado quando:
+---
 
-Ocorre um push ou pull request nos branches main ou dev.
+### 2. **Como o Fluxo de Trabalho Funciona**
 
-É disparado manualmente pela interface do GitHub.
+O fluxo de trabalho do GitHub Actions é acionado em:
 
-Chega o horário agendado (diariamente à meia-noite).
+- Pushes ou pull requests para as branches `main` ou `dev`.
+- Acionamento manual através da interface do GitHub.
+- Um agendamento diário à meia-noite.
 
-O processo segue estas etapas:
+O fluxo de trabalho executa os seguintes passos:
 
-Verifica se os backups estão ativos através da variável BACKUP_ENABLED.
+1. Verifica se os backups estão habilitados usando a variável `BACKUP_ENABLED`.
+2. Executa o Supabase CLI para criar três arquivos de backup:
+   - `roles.sql`: Contém funções e permissões.
+   - `schema.sql`: Contém a estrutura do banco de dados.
+   - `data.sql`: Contém os dados da tabela.
+3. Commita os backups no repositório usando uma ação de auto-commit.
 
-Executa a CLI do Supabase para criar três arquivos:
+---
 
-roles.sql: Contém usuários e permissões.
+### 3. **Restaurando Seu Banco de Dados**
 
-schema.sql: Contém a estrutura das tabelas e banco.
+Para restaurar seu banco de dados:
 
-data.sql: Contém os dados inseridos nas tabelas.
+1. Instale o [Supabase CLI](https://supabase.com/docs/guides/cli).
+2. Abra um terminal e navegue até a pasta que contém seus arquivos de backup.
+3. Execute os seguintes comandos em ordem:
 
-Faz o commit automático dos arquivos de backup de volta para o repositório.
-
-3. Restaurando Seu Banco de Dados
-Para restaurar o banco:
-
-Instale a Supabase CLI.
-
-Abra o terminal e navegue até a pasta que contém os arquivos de backup.
-
-Execute os seguintes comandos na ordem abaixo:
-
-Bash
-
+```bash
 supabase db execute --db-url "<SUPABASE_DB_URL>" -f roles.sql
 supabase db execute --db-url "<SUPABASE_DB_URL>" -f schema.sql
 supabase db execute --db-url "<SUPABASE_DB_URL>" -f data.sql
-Isso restaurará as permissões, a estrutura e os dados, retornando o banco ao estado do último backup.
+```
 
-Requisitos
-Um projeto no Supabase com banco de dados PostgreSQL.
+Isso restaura funções, esquema e dados, trazendo seu banco de dados de volta ao estado do backup.
 
-Supabase CLI instalada (apenas para restauração manual).
+### Alternância do Fluxo de Trabalho
 
-Um repositório no GitHub com as Actions habilitadas.
+Use a variável `BACKUP_ENABLED` para controlar se os backups são executados:
 
-Contribuição
+- Defina como `true` para habilitar os backups.
+- Defina como `false` para pular os backups sem precisar editar o arquivo de fluxo de trabalho.
+
+## Requisitos
+
+- Um projeto Supabase com um banco de dados PostgreSQL.
+- Supabase CLI instalado para restauração manual.
+- Um repositório GitHub com Actions habilitado.
+
+## Contribuições
+
 Contribuições são bem-vindas! Se você tiver melhorias ou correções, sinta-se à vontade para enviar um pull request.
 
-Licença
-Este projeto está sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
+## Licença
+
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo `LICENSE` para obter detalhes.
