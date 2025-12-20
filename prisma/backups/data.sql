@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- \restrict 0hklqfaob6HSARadJ6WKxSrT0Gwf2IhTQwin4B91mVU1IGnuDFeupfM06sSc7C7
+-- \restrict Ie3ig9bLBZgbgkcKxDQDs4zwC54fedG4Lu2V90SJy0Qmw4WmzvePNNQBHTk8JGS
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -42,8 +42,8 @@ COPY "auth"."flow_state" ("id", "user_id", "auth_code", "code_challenge_method",
 --
 
 COPY "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") FROM stdin;
+00000000-0000-0000-0000-000000000000	eb3796bb-27da-4d91-96dc-0743c3ee136e	authenticated	authenticated	admin@repal.com	$2a$10$NqCcs/0BkVdNyrMcg2/OcuCzT4g/rq.1dgmkvHtc8o.F0s1SMZsbC	2025-11-13 18:50:33.894901+00	\N		\N		\N			\N	2025-12-17 17:36:20.786055+00	{"provider": "email", "providers": ["email"]}	{"role": "admin", "email_verified": true}	\N	2025-11-13 18:50:33.871161+00	2025-12-19 20:45:10.50873+00	\N	\N			\N		0	\N		\N	f	\N	f
 00000000-0000-0000-0000-000000000000	53c708f0-d587-464d-b270-bd5833953672	authenticated	authenticated	kmkz.clan@gmail.com	$2a$10$Bf//yOsZ5e.hHbu.ZnJxYeWsKl54MVcEmgX1Pj26nymn4ldiyGDiW	\N	\N	fc222b37da5ff13b255c66012ad8b847b36254216182ecc91edcb98c	2025-12-10 01:56:24.45087+00		\N			\N	\N	{"provider": "email", "providers": ["email"]}	{"sub": "53c708f0-d587-464d-b270-bd5833953672", "email": "kmkz.clan@gmail.com", "email_verified": false, "phone_verified": false}	\N	2025-12-10 01:56:24.376485+00	2025-12-10 01:56:25.068582+00	\N	\N			\N		0	\N		\N	f	\N	f
-00000000-0000-0000-0000-000000000000	eb3796bb-27da-4d91-96dc-0743c3ee136e	authenticated	authenticated	admin@repal.com	$2a$10$NqCcs/0BkVdNyrMcg2/OcuCzT4g/rq.1dgmkvHtc8o.F0s1SMZsbC	2025-11-13 18:50:33.894901+00	\N		\N		\N			\N	2025-12-17 17:36:20.786055+00	{"provider": "email", "providers": ["email"]}	{"role": "admin", "email_verified": true}	\N	2025-11-13 18:50:33.871161+00	2025-12-19 01:14:13.831359+00	\N	\N			\N		0	\N		\N	f	\N	f
 \.
 
 
@@ -78,8 +78,8 @@ COPY "auth"."oauth_clients" ("id", "client_secret_hash", "registration_type", "r
 --
 
 COPY "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "factor_id", "aal", "not_after", "refreshed_at", "user_agent", "ip", "tag", "oauth_client_id", "refresh_token_hmac_key", "refresh_token_counter", "scopes") FROM stdin;
+1b1f841d-20c9-4e85-b216-1c1bedf87237	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-16 11:41:32.114551+00	2025-12-19 20:45:10.522169+00	\N	aal1	\N	2025-12-19 20:45:10.522061	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
 fcf38773-e830-40ee-8c88-52877a95d967	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-17 17:36:20.787352+00	2025-12-17 23:30:16.55499+00	\N	aal1	\N	2025-12-17 23:30:16.554868	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
-1b1f841d-20c9-4e85-b216-1c1bedf87237	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-16 11:41:32.114551+00	2025-12-19 01:14:13.838165+00	\N	aal1	\N	2025-12-19 01:14:13.837458	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
 \.
 
 
@@ -193,7 +193,18 @@ COPY "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "revoked"
 00000000-0000-0000-0000-000000000000	441	trlhyco3uziq	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-18 22:17:13.895169+00	2025-12-18 23:16:14.060085+00	7bqyrod2kqwh	1b1f841d-20c9-4e85-b216-1c1bedf87237
 00000000-0000-0000-0000-000000000000	442	jicfsh5zvp6y	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-18 23:16:14.07891+00	2025-12-19 00:15:13.679394+00	trlhyco3uziq	1b1f841d-20c9-4e85-b216-1c1bedf87237
 00000000-0000-0000-0000-000000000000	443	2eb5lp2epiyr	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 00:15:13.705336+00	2025-12-19 01:14:13.805418+00	jicfsh5zvp6y	1b1f841d-20c9-4e85-b216-1c1bedf87237
-00000000-0000-0000-0000-000000000000	444	7fexk5g7wah3	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-19 01:14:13.820682+00	2025-12-19 01:14:13.820682+00	2eb5lp2epiyr	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	444	7fexk5g7wah3	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 01:14:13.820682+00	2025-12-19 02:13:13.551942+00	2eb5lp2epiyr	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	445	hbrnxetgpgqx	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 02:13:13.560162+00	2025-12-19 11:54:17.030282+00	7fexk5g7wah3	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	446	cquwogakzq5w	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 11:54:17.064457+00	2025-12-19 12:53:10.803358+00	hbrnxetgpgqx	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	447	yspb44wct5tn	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 12:53:10.822201+00	2025-12-19 13:52:10.69684+00	cquwogakzq5w	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	448	7oyxbuys5g2j	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 13:52:10.715406+00	2025-12-19 14:51:10.643259+00	yspb44wct5tn	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	449	bfphs3s3ieip	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 14:51:10.663821+00	2025-12-19 15:50:10.547343+00	7oyxbuys5g2j	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	450	6c7mbtarc5o6	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 15:50:10.56389+00	2025-12-19 16:49:10.427282+00	bfphs3s3ieip	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	451	iprn6tr5qzrx	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 16:49:10.444134+00	2025-12-19 17:48:04.186347+00	6c7mbtarc5o6	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	452	n7shfhm36wq5	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 17:48:04.209212+00	2025-12-19 18:47:10.45921+00	iprn6tr5qzrx	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	453	4oehhjhqmkb3	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 18:47:10.476071+00	2025-12-19 19:45:46.438069+00	n7shfhm36wq5	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	454	pfntcrarz4gs	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-19 19:45:46.450685+00	2025-12-19 20:45:10.469099+00	4oehhjhqmkb3	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	455	holeqxhtle7j	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-19 20:45:10.493353+00	2025-12-19 20:45:10.493353+00	pfntcrarz4gs	1b1f841d-20c9-4e85-b216-1c1bedf87237
 \.
 
 
@@ -984,6 +995,7 @@ e6b9f5e3-1d40-477f-b16e-07ad0cbbd473	\N	site_visit	site	repal	"{\\"visitor_id\\"
 7f820814-aa4c-44e6-bbb6-26635acda485	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1765958461233-ymun4q1w\\",\\"path\\":\\"/categorias/acougue/balcoes-acougue\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-17 08:01:05.939839+00
 254766b0-cc2f-499b-bfe6-3afa14a4b4fe	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1765963710058-vtwkmrsq\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-17 09:28:30.341746+00
 b496cb30-809d-44bd-9b51-3fe9f1921c1c	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1765970906494-vgvatur0\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-17 11:28:27.068292+00
+372ede63-3e10-4cb3-93e0-54daffb9f038	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766130932477-hyhcvsma\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)	success	2025-12-19 07:55:32.724831+00
 3da6ee83-4ee2-40a4-a54e-048051e38b8c	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1765574794898-nx5r9hdy\\",\\"path\\":\\"/categorias/padaria-confeitaria/fornos-turbo\\"}"	\N	Mozilla/5.0 (compatible; woorankreview/2.0; +https://www.woorank.com/)	success	2025-12-12 21:26:35.038174+00
 f0858ea2-9143-46f4-847e-dc4808f84f23	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1765574804096-0pvhgish\\",\\"path\\":\\"/categorias/refrigeracao-comercial/visa-coolers\\"}"	\N	Mozilla/5.0 (compatible; woorankreview/2.0; +https://www.woorank.com/)	success	2025-12-12 21:26:44.261573+00
 28080360-acfa-49f9-b698-6a32eb3022fd	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1765574806179-ccfh987a\\",\\"path\\":\\"/categorias/refrigeracao-comercial/camara-frias\\"}"	\N	Mozilla/5.0 (compatible; woorankreview/2.0; +https://www.woorank.com/)	success	2025-12-12 21:26:46.297555+00
@@ -2179,6 +2191,7 @@ a8decc06-3f5c-49b0-9d96-293b524ea6ec	\N	product_view	product	242	"{\\"product_id
 9ebe6508-ce25-42a3-aa0a-70c13c6d5efb	\N	product_view	product	148	"{\\"product_id\\":148,\\"product_name\\":\\"CENTRIFUGA DE SUCOS CSE SKYMSEN\\",\\"slug\\":\\"centrifuga-de-sucos-cse-skymsen\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 19:07:30.218055+00
 4f067d67-50b3-431e-b174-8d6b4fbf1b39	\N	product_view	product	151	"{\\"product_id\\":151,\\"product_name\\":\\"ESPREMEDOR MEDIO JL COLOMBO\\",\\"slug\\":\\"espremedor-medio-jl-colombo\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 19:07:31.967112+00
 5106119a-25e9-401e-9425-90ec05c00174	\N	product_view	product	152	"{\\"product_id\\":152,\\"product_name\\":\\"ESPREMEDOR PEQUENO JL COLOMBO\\",\\"slug\\":\\"espremedor-pequeno-jl-colombo\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 19:07:32.499236+00
+3794617f-9ed0-49a6-a58b-8d82701b1f32	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766160221490-a9pj68ub\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)	success	2025-12-19 16:03:41.817701+00
 83828da9-1aad-47e2-b886-3c93ad4eff17	\N	product_view	product	157	"{\\"product_id\\":157,\\"product_name\\":\\"FOGAO BRAVO 6 QUEIMADORES C/FORNO\\",\\"slug\\":\\"fogao-bravo-6-queimadores-cforno\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 16:53:29.015591+00
 e84f1bcf-7696-4c26-9833-3b2dc5ae8d9c	\N	product_view	product	162	"{\\"product_id\\":162,\\"product_name\\":\\"FORNOS COMBINADOS C-MAX6\\",\\"slug\\":\\"fornos-combinados-c-max6\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 16:53:31.957987+00
 1bd8fc49-6bf8-4c15-9351-7b823fbbed34	\N	product_view	product	171	"{\\"product_id\\":171,\\"product_name\\":\\"FORNO DE CONVECCAO HPE80\\",\\"slug\\":\\"forno-de-conveccao-hpe80\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 16:53:34.783699+00
@@ -2202,6 +2215,7 @@ dd54d61b-91e6-4a77-a3ff-b31ed24a9d5d	\N	product_view	product	254	"{\\"product_id
 52804ad1-96c6-4477-ad1b-56d2ffb5a5c3	\N	product_view	product	149	"{\\"product_id\\":149,\\"product_name\\":\\"ESPREMEDOR DE FRUTA INDUSTRIAL GRANDE EM INOX JL COLOMBO\\",\\"slug\\":\\"espremedor-de-fruta-industrial-grande-em-inox-jl-colombo\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 19:07:30.758693+00
 65662878-fe55-4e08-9ddd-17e337d2543c	\N	product_view	product	153	"{\\"product_id\\":153,\\"product_name\\":\\"EXTRATOR DE SUCO ARBEL XTT PRO\\",\\"slug\\":\\"extrator-de-suco-arbel-xtt-pro\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 19:07:33.035981+00
 0bdac27f-b463-4ed6-9c13-4b6c96e85ed5	\N	product_view	product	157	"{\\"product_id\\":157,\\"product_name\\":\\"FOGAO BRAVO 6 QUEIMADORES C/FORNO\\",\\"slug\\":\\"fogao-bravo-6-queimadores-cforno\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 19:07:35.367728+00
+213ee4c7-d3a6-42de-a545-afc67f582f19	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766187620213-3fdioueh\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)	success	2025-12-19 23:40:20.534765+00
 1b8f905b-1952-46d5-b094-59c800d9b677	\N	product_view	product	236	"{\\"product_id\\":236,\\"product_name\\":\\"ARMÁRIO DE CRESCIMENTO\\",\\"slug\\":\\"armario-de-crescimento\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 16:54:10.160287+00
 69445f16-f5a7-4257-b4dd-1aad4bb107cc	\N	product_view	product	239	"{\\"product_id\\":239,\\"product_name\\":\\"FATIADOR DE FRIOS ARBEL 178 MC 3.0 MONO\\",\\"slug\\":\\"fatiador-de-frios-arbel-178-mc-30-mono\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 16:54:11.356673+00
 99d9f70f-7c61-4474-a559-b313b91bcb97	\N	product_view	product	259	"{\\"product_id\\":259,\\"product_name\\":\\"TAÇA DE VINHO\\",\\"slug\\":\\"taca-de-vinho\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-17 16:54:16.494781+00
@@ -3884,6 +3898,18 @@ c1813754-a59c-4456-9e01-53d264ca847b	\N	site_visit	site	repal	"{\\"visitor_id\\"
 ce032201-a8b2-4f0b-8231-5f6fcbc50df0	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766100505749-dcejq4vp\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-18 23:28:26.027877+00
 5ac6f6bc-3f39-431a-9a41-6d4fe2b460db	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766100506075-k8svjyps\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-18 23:28:26.54886+00
 5ebd7676-84fb-4dd7-8047-977eea0521b4	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766104110464-wcg19ibi\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-19 00:28:30.972847+00
+cb044655-0fa6-4ff4-bbb9-e6bd288713a6	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766102400053-ymun4q1w\\",\\"path\\":\\"/categorias/refrigeracao-comercial/bebedouros\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-19 07:50:45.164906+00
+cf6c906e-6629-48c4-a4ba-10bb2f3dcf17	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766102400053-ymun4q1w\\",\\"path\\":\\"/categorias/refrigeracao-comercial/bebedouros\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-19 08:43:57.949172+00
+22c6dcc8-a403-4bae-9b3f-424902b4e0d4	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766147306306-3arved6t\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-19 12:28:26.872045+00
+a47a5a4d-dca3-40ff-8f9c-4740afe7a97c	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766154505824-kd30asyw\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-19 14:28:26.229103+00
+7cb4a414-1934-4bfc-a6cc-dc04e2ce0587	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766154505840-8d0luhc9\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-19 14:28:26.329152+00
+ee8eccbc-e30d-41db-ae6b-7473e77367ed	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766102400051-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-19 16:37:31.028383+00
+a7d16778-fcf1-4642-8d37-9676a4461d04	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766162269202-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-19 16:37:50.256606+00
+8a0b4bf6-7b9d-4209-8cf5-fb1033f1611d	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766162269397-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/141.0.7390.122 Safari/537.36	success	2025-12-19 16:37:50.342001+00
+96faa518-3cde-4d5d-b7ee-bf9b8d6c1c03	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766102400053-ymun4q1w\\",\\"path\\":\\"/categorias/bar-restaurante/fornos-combinados\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-19 16:59:53.825615+00
+3912a71c-8991-4e10-b8c6-34d2e077bdbb	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766165309482-8jhxoxxa\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-19 17:28:29.812468+00
+6ee1cb14-9f30-4377-bcc3-cc1db9ca30c2	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766167084618-v4o037nk\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2025-12-19 17:58:05.055219+00
+8f264357-48cc-4bea-aeec-19bd6c486696	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766168906106-zdnxlasn\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-19 18:28:26.393529+00
 \.
 
 
@@ -4053,6 +4079,10 @@ COPY "public"."categories" ("id", "name", "slug", "active", "featured_product_id
 78	Lixeiras	lixeiras	t	\N	2025-11-14 21:29:11.173741	2025-11-14 21:29:11.173741	0	14	t
 79	Pias de Assepsia	pias-assepsia	t	\N	2025-11-14 21:29:11.173741	2025-11-14 21:29:11.173741	0	14	t
 80	Prateleiras	prateleiras	t	\N	2025-11-14 21:29:11.173741	2025-11-14 21:29:11.173741	0	14	t
+83	 Ultracongelador	ultracongelador	t	\N	\N	\N	1	9	t
+84	Expositor Vertical	expositor-vertical	t	\N	\N	\N	1	9	t
+85	Freezer Vertical	freezer-vertical	t	\N	\N	\N	1	9	t
+86	Refrigerador Comercial	refrigerador-comercial	t	\N	\N	\N	1	9	t
 \.
 
 
@@ -5272,7 +5302,7 @@ COPY "storage"."vector_indexes" ("id", "name", "bucket_id", "data_type", "dimens
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 444, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 455, true);
 
 
 --
@@ -5286,7 +5316,7 @@ SELECT pg_catalog.setval('"public"."banners_id_seq"', 4, true);
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."categories_id_seq"', 80, true);
+SELECT pg_catalog.setval('"public"."categories_id_seq"', 86, true);
 
 
 --
@@ -5335,6 +5365,6 @@ SELECT pg_catalog.setval('"public"."stores_id_seq"', 1, true);
 -- PostgreSQL database dump complete
 --
 
--- \unrestrict 0hklqfaob6HSARadJ6WKxSrT0Gwf2IhTQwin4B91mVU1IGnuDFeupfM06sSc7C7
+-- \unrestrict Ie3ig9bLBZgbgkcKxDQDs4zwC54fedG4Lu2V90SJy0Qmw4WmzvePNNQBHTk8JGS
 
 RESET ALL;
