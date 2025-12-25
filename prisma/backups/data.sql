@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- \restrict 9p6uJ1sjJVEuUuVVRbWQhoRfblKr0Vh8zg7Ieh43k3u01BDuE3G78WOYMeZCe3M
+-- \restrict HOMBTrbe3GeQQRlhqmFh9m04mP3A1OBHqo0clplPVDDeRe18HKwUCg7lEnTOP2u
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -42,7 +42,7 @@ COPY "auth"."flow_state" ("id", "user_id", "auth_code", "code_challenge_method",
 --
 
 COPY "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") FROM stdin;
-00000000-0000-0000-0000-000000000000	eb3796bb-27da-4d91-96dc-0743c3ee136e	authenticated	authenticated	admin@repal.com	$2a$10$NqCcs/0BkVdNyrMcg2/OcuCzT4g/rq.1dgmkvHtc8o.F0s1SMZsbC	2025-11-13 18:50:33.894901+00	\N		\N		\N			\N	2025-12-17 17:36:20.786055+00	{"provider": "email", "providers": ["email"]}	{"role": "admin", "email_verified": true}	\N	2025-11-13 18:50:33.871161+00	2025-12-23 16:14:30.69065+00	\N	\N			\N		0	\N		\N	f	\N	f
+00000000-0000-0000-0000-000000000000	eb3796bb-27da-4d91-96dc-0743c3ee136e	authenticated	authenticated	admin@repal.com	$2a$10$NqCcs/0BkVdNyrMcg2/OcuCzT4g/rq.1dgmkvHtc8o.F0s1SMZsbC	2025-11-13 18:50:33.894901+00	\N		\N		\N			\N	2025-12-24 23:53:27.130236+00	{"provider": "email", "providers": ["email"]}	{"role": "admin", "email_verified": true}	\N	2025-11-13 18:50:33.871161+00	2025-12-24 23:53:27.181981+00	\N	\N			\N		0	\N		\N	f	\N	f
 00000000-0000-0000-0000-000000000000	53c708f0-d587-464d-b270-bd5833953672	authenticated	authenticated	kmkz.clan@gmail.com	$2a$10$Bf//yOsZ5e.hHbu.ZnJxYeWsKl54MVcEmgX1Pj26nymn4ldiyGDiW	\N	\N	fc222b37da5ff13b255c66012ad8b847b36254216182ecc91edcb98c	2025-12-10 01:56:24.45087+00		\N			\N	\N	{"provider": "email", "providers": ["email"]}	{"sub": "53c708f0-d587-464d-b270-bd5833953672", "email": "kmkz.clan@gmail.com", "email_verified": false, "phone_verified": false}	\N	2025-12-10 01:56:24.376485+00	2025-12-10 01:56:25.068582+00	\N	\N			\N		0	\N		\N	f	\N	f
 \.
 
@@ -80,6 +80,7 @@ COPY "auth"."oauth_clients" ("id", "client_secret_hash", "registration_type", "r
 COPY "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "factor_id", "aal", "not_after", "refreshed_at", "user_agent", "ip", "tag", "oauth_client_id", "refresh_token_hmac_key", "refresh_token_counter", "scopes") FROM stdin;
 fcf38773-e830-40ee-8c88-52877a95d967	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-17 17:36:20.787352+00	2025-12-17 23:30:16.55499+00	\N	aal1	\N	2025-12-17 23:30:16.554868	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
 1b1f841d-20c9-4e85-b216-1c1bedf87237	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-16 11:41:32.114551+00	2025-12-23 16:14:30.704827+00	\N	aal1	\N	2025-12-23 16:14:30.702969	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 OPR/125.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
+4123bf6e-cf2b-480e-9ac7-2577ec9efeac	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-24 23:53:27.132225+00	2025-12-24 23:53:27.132225+00	\N	aal1	\N	\N	Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/90.0.0.0	201.25.167.68	\N	\N	\N	\N	\N
 \.
 
 
@@ -90,6 +91,7 @@ fcf38773-e830-40ee-8c88-52877a95d967	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-1
 COPY "auth"."mfa_amr_claims" ("session_id", "created_at", "updated_at", "authentication_method", "id") FROM stdin;
 1b1f841d-20c9-4e85-b216-1c1bedf87237	2025-12-16 11:41:32.167081+00	2025-12-16 11:41:32.167081+00	password	cd4224cf-e2ea-4150-9c5d-b531e22674d5
 fcf38773-e830-40ee-8c88-52877a95d967	2025-12-17 17:36:20.841216+00	2025-12-17 17:36:20.841216+00	password	d956fc72-0249-41ed-80ff-9f8772c02ac8
+4123bf6e-cf2b-480e-9ac7-2577ec9efeac	2025-12-24 23:53:27.183442+00	2025-12-24 23:53:27.183442+00	password	732f04a1-66fd-46b9-b444-55c02abb14f6
 \.
 
 
@@ -215,6 +217,7 @@ COPY "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "revoked"
 00000000-0000-0000-0000-000000000000	463	vtirn4qa7qqf	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-23 11:18:58.174312+00	2025-12-23 13:03:19.016728+00	4prmb376fhk2	1b1f841d-20c9-4e85-b216-1c1bedf87237
 00000000-0000-0000-0000-000000000000	464	q7jjlb4showx	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-23 13:03:19.04028+00	2025-12-23 16:14:30.65589+00	vtirn4qa7qqf	1b1f841d-20c9-4e85-b216-1c1bedf87237
 00000000-0000-0000-0000-000000000000	465	lgcmycmgenaq	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-23 16:14:30.674516+00	2025-12-23 16:14:30.674516+00	q7jjlb4showx	1b1f841d-20c9-4e85-b216-1c1bedf87237
+00000000-0000-0000-0000-000000000000	466	7dvhm5peqmt3	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-24 23:53:27.157028+00	2025-12-24 23:53:27.157028+00	\N	4123bf6e-cf2b-480e-9ac7-2577ec9efeac
 \.
 
 
@@ -3339,6 +3342,7 @@ dde98981-d3e7-42f2-ab9c-eab7d40423cc	\N	product_view	product	133	"{\\"product_id
 607638e0-bd5a-4460-b900-ee37726d6708	\N	product_view	product	135	"{\\"product_id\\":135,\\"product_name\\":\\"ESTUFA GIRATORIA VAPOR 465G 3B TITÃ\\",\\"slug\\":\\"estufa-giratoria-vapor-465g-3b-tita\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-18 12:05:31.149606+00
 4cc1f0f5-16b5-4d60-8830-9b3e17ea9982	\N	product_view	product	137	"{\\"product_id\\":137,\\"product_name\\":\\"ESTUFA W 12BD TITA\\",\\"slug\\":\\"estufa-w-12bd-tita\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-18 12:05:32.348642+00
 172ab1b8-e1ca-4ab1-b5af-e7d147b2b6d4	\N	product_view	product	138	"{\\"product_id\\":138,\\"product_name\\":\\"ESTUFA W 3B TITA\\",\\"slug\\":\\"estufa-w-3b-tita\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-18 12:05:32.814033+00
+f9470967-729d-46e9-ac47-bcfc86d23906	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766549854041-o5k4psih\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)	success	2025-12-24 04:17:34.31212+00
 a203f05c-08bb-43b7-900b-a4669ef5447f	\N	product_view	product	157	"{\\"product_id\\":157,\\"product_name\\":\\"FOGAO BRAVO 6 QUEIMADORES C/FORNO\\",\\"slug\\":\\"fogao-bravo-6-queimadores-cforno\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-18 12:05:43.543758+00
 6d0c8c5d-6c66-41b4-a4c9-73d2246368b9	\N	product_view	product	159	"{\\"product_id\\":159,\\"product_name\\":\\"FORNO ELETRICO CRYSTAL INOX ADVANCED\\",\\"slug\\":\\"forno-eletrico-crystal-inox-advanced\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-18 12:05:45.206383+00
 0c7ded2b-2dab-40c5-9664-49af749fc2b4	\N	product_view	product	44	"{\\"product_id\\":44,\\"product_name\\":\\"ASSADOR DE FRANGO G2 AF20\\",\\"slug\\":\\"assador-de-frango-g2-af20\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.0 Safari/537.36	success	2025-12-18 12:05:46.968837+00
@@ -4031,6 +4035,17 @@ c42f063a-1668-46db-b064-09ab9c84973d	\N	site_visit	site	repal	"{\\"visitor_id\\"
 1a5fd788-21da-425b-9c2c-acddd21d0273	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766510908988-vnmvo90k\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-23 17:28:29.511573+00
 0c5c115d-ed75-4ef2-b50a-e136ce029ae0	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766528906671-agvr3tg4\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-23 22:28:27.180782+00
 1acfdf3c-8c63-414f-99c6-9b26e0c9b311	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766529947890-bch0fq1f\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2025-12-23 22:45:48.294863+00
+8e5ae49f-66b3-4490-9809-988d8ba5d0b6	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766534400051-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-24 07:04:54.963345+00
+55834d87-f78f-489a-85e6-bce1df858f6f	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766594539032-7kzj7iqg\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2025-12-24 16:42:19.572857+00
+8bb9702c-9538-40e2-b73f-49d38ce795ec	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766594926671-qdwzxsfw\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)	success	2025-12-24 16:48:46.871501+00
+387835a1-ec74-41a8-8f8a-9ef45e2e2228	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766597311315-v51idtwz\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-24 17:28:31.671558+00
+83fa3b73-d573-4787-be3b-ea4bc6057287	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766534400053-zf7h2uz6\\",\\"path\\":\\"/categorias/padaria-confeitaria/batedeiras\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-24 17:42:57.367611+00
+fff616c0-b1f3-4bb5-a367-5aa860e8c536	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766618906527-g98md7gj\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2025-12-24 23:28:27.091369+00
+ba836561-6a6b-4e65-9b74-da057bf1d849	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766620289774-jo7peipx\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/90.0.0.0	success	2025-12-24 23:51:26.561657+00
+64888dd0-6f38-4371-9380-aa01e1578528	\N	product_view	product	7	"{\\"product_id\\":7,\\"product_name\\":\\"Jogo de Panela de Cerâmica Duo Smart 5 Peças - Cobre\\",\\"slug\\":\\"jogo-de-panela-de-ceramica-dhttpspuo-smart-5-pecas-cobre\\"}"	\N	Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/90.0.0.0	success	2025-12-24 23:51:36.94306+00
+d277a42e-025f-4b29-8fb0-d1b913a2457c	\N	whatsapp_click	store	curitiba	"{\\"store_id\\":\\"curitiba\\",\\"store_name\\":\\"Loja Curitiba\\",\\"phone\\":\\"5541999412928\\",\\"path\\":\\"/produto/jogo-de-panela-de-ceramica-dhttpspuo-smart-5-pecas-cobre\\",\\"message\\":\\"Olá! Tenho interesse no produto: Jogo de Panela de Cerâmica Duo Smart 5 Peças - Cobre. Gostaria de mais informações sobre especificações, preço e disponibilidade.\\"}"	\N	Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/90.0.0.0	success	2025-12-24 23:52:16.342524+00
+725bcd46-cf9b-4fed-b8c3-c973fe9130a3	\N	product_view	product	7	"{\\"product_id\\":7,\\"product_name\\":\\"Jogo de Panela de Cerâmica Duo Smart 5 Peças - Cobre\\",\\"slug\\":\\"jogo-de-panela-de-ceramica-dhttpspuo-smart-5-pecas-cobre\\"}"	\N	Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/90.0.0.0	success	2025-12-24 23:53:11.511323+00
+9a56c724-4884-4395-aff1-456bfc108df1	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1766627896267-1jqidc3e\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)	success	2025-12-25 01:58:16.715406+00
 \.
 
 
@@ -5426,7 +5441,7 @@ COPY "storage"."vector_indexes" ("id", "name", "bucket_id", "data_type", "dimens
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 465, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 466, true);
 
 
 --
@@ -5489,6 +5504,6 @@ SELECT pg_catalog.setval('"public"."stores_id_seq"', 1, true);
 -- PostgreSQL database dump complete
 --
 
--- \unrestrict 9p6uJ1sjJVEuUuVVRbWQhoRfblKr0Vh8zg7Ieh43k3u01BDuE3G78WOYMeZCe3M
+-- \unrestrict HOMBTrbe3GeQQRlhqmFh9m04mP3A1OBHqo0clplPVDDeRe18HKwUCg7lEnTOP2u
 
 RESET ALL;
