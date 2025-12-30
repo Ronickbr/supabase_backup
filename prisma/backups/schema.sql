@@ -641,7 +641,7 @@ CREATE POLICY "Admin Write Access on site_settings" ON "public"."site_settings" 
 
 
 
-CREATE POLICY "Admin Write Access on stores" ON "public"."stores" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Write Access on stores" ON "public"."stores" TO "authenticated" USING (true) WITH CHECK (true);
 
 
 
