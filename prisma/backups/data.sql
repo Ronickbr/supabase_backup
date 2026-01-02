@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- \restrict 26SErQy2uN0LvwCJEmprNmBBX4u3zJ7lSkm9Hl3K5u4nrPU9odv1Yf2C2dv1aqr
+-- \restrict ZIN0ybqTleJlkrNqm2YHs0fNsoJ9AhhyiiCPAJBbqmfuK6whyfyFjNswUpCzFjU
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -4775,6 +4775,16 @@ e7683819-cc4f-4a53-9a70-9c51a4306eda	\N	site_visit	site	repal	"{\\"visitor_id\\"
 24384b6c-e21c-478f-9c42-dbc7d9fd3cb4	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767214539529-aamzumi6\\",\\"path\\":\\"/categorias/mobiliario-inox/pias-assepsia\\"}"	\N	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36	success	2025-12-31 20:55:39.659122+00
 f43e66ff-719c-4733-b90f-c94170a305b9	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767216589951-5e1v5p3h\\",\\"path\\":\\"/categorias/utilidades-domesticas\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36	success	2025-12-31 21:29:50.304342+00
 325752a5-7794-4ffd-824f-0f1cf954986e	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767139200053-ymun4q1w\\",\\"path\\":\\"/categorias/utilidades-domesticas/jarras\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2025-12-31 22:59:48.37627+00
+5f84223c-5e46-4090-97fa-3dd2a9f18c17	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767225600053-ymun4q1w\\",\\"path\\":\\"/categorias/bar-restaurante/cortador-legumes\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-01 06:45:14.430585+00
+66699305-7ff8-450e-942d-10082f3f4866	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767256848079-qdvan4zy\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2026-01-01 08:40:48.302381+00
+c34683fe-c071-4d25-b841-5b49c68164d4	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767278448270-2dc8aldo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2026-01-01 14:40:48.501454+00
+49e4c470-2b27-4621-aa78-788d21117fc8	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767295891876-6dd5q94a\\",\\"path\\":\\"/categorias/utilidades-domesticas/utensilios\\"}"	\N	Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm) Chrome/136.0.0.0 Safari/537.36	success	2026-01-01 19:31:32.388536+00
+e90ccb74-894d-4d05-b65a-202661b652ce	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767310231411-lk554v4q\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2026-01-01 23:30:31.88122+00
+22b93a82-434b-44d4-be1a-5b0e52214cb2	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767313706679-jxemi8uv\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 00:28:27.171627+00
+6738f7d9-d23b-4adf-abd8-6fd9f3dcef90	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000053-ymun4q1w\\",\\"path\\":\\"/categorias/refrigeracao-comercial/freezers\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 00:33:08.669019+00
+a4d19fa3-5622-4c8d-aca6-5bdae547bd6f	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000053-voml20rm\\",\\"path\\":\\"/categorias/padaria-confeitaria\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 01:25:08.974806+00
+104d39ea-d1ff-4ba7-97ac-cb5965495ec7	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767317306289-kxzbdx5u\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 01:28:26.788038+00
+a1a23f31-c19c-4a92-9b9e-558ba8fb164c	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767317306503-icd25kwe\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 01:28:26.951102+00
 \.
 
 
@@ -6378,6 +6388,6 @@ SELECT pg_catalog.setval('"public"."stores_id_seq"', 1, true);
 -- PostgreSQL database dump complete
 --
 
--- \unrestrict 26SErQy2uN0LvwCJEmprNmBBX4u3zJ7lSkm9Hl3K5u4nrPU9odv1Yf2C2dv1aqr
+-- \unrestrict ZIN0ybqTleJlkrNqm2YHs0fNsoJ9AhhyiiCPAJBbqmfuK6whyfyFjNswUpCzFjU
 
 RESET ALL;
