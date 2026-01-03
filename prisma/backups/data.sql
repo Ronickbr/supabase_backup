@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- \restrict ZIN0ybqTleJlkrNqm2YHs0fNsoJ9AhhyiiCPAJBbqmfuK6whyfyFjNswUpCzFjU
+-- \restrict Z5KQ2f95Yf1mGmus5mot0xwtQ8VIln1qwGpSnfBbY57kpqeOoCPfAPx8FKEDjAg
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -42,8 +42,8 @@ COPY "auth"."flow_state" ("id", "user_id", "auth_code", "code_challenge_method",
 --
 
 COPY "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") FROM stdin;
-00000000-0000-0000-0000-000000000000	eb3796bb-27da-4d91-96dc-0743c3ee136e	authenticated	authenticated	admin@repal.com	$2a$10$NqCcs/0BkVdNyrMcg2/OcuCzT4g/rq.1dgmkvHtc8o.F0s1SMZsbC	2025-11-13 18:50:33.894901+00	\N		\N		\N			\N	2025-12-29 22:53:56.071687+00	{"provider": "email", "providers": ["email"]}	{"role": "admin", "email_verified": true}	\N	2025-11-13 18:50:33.871161+00	2025-12-30 01:56:23.421041+00	\N	\N			\N		0	\N		\N	f	\N	f
 00000000-0000-0000-0000-000000000000	53c708f0-d587-464d-b270-bd5833953672	authenticated	authenticated	kmkz.clan@gmail.com	$2a$10$Bf//yOsZ5e.hHbu.ZnJxYeWsKl54MVcEmgX1Pj26nymn4ldiyGDiW	\N	\N	fc222b37da5ff13b255c66012ad8b847b36254216182ecc91edcb98c	2025-12-10 01:56:24.45087+00		\N			\N	\N	{"provider": "email", "providers": ["email"]}	{"sub": "53c708f0-d587-464d-b270-bd5833953672", "email": "kmkz.clan@gmail.com", "email_verified": false, "phone_verified": false}	\N	2025-12-10 01:56:24.376485+00	2025-12-10 01:56:25.068582+00	\N	\N			\N		0	\N		\N	f	\N	f
+00000000-0000-0000-0000-000000000000	eb3796bb-27da-4d91-96dc-0743c3ee136e	authenticated	authenticated	admin@repal.com	$2a$10$NqCcs/0BkVdNyrMcg2/OcuCzT4g/rq.1dgmkvHtc8o.F0s1SMZsbC	2025-11-13 18:50:33.894901+00	\N		\N		\N			\N	2025-12-29 22:53:56.071687+00	{"provider": "email", "providers": ["email"]}	{"role": "admin", "email_verified": true}	\N	2025-11-13 18:50:33.871161+00	2026-01-03 01:42:03.814497+00	\N	\N			\N		0	\N		\N	f	\N	f
 \.
 
 
@@ -80,10 +80,10 @@ COPY "auth"."oauth_clients" ("id", "client_secret_hash", "registration_type", "r
 COPY "auth"."sessions" ("id", "user_id", "created_at", "updated_at", "factor_id", "aal", "not_after", "refreshed_at", "user_agent", "ip", "tag", "oauth_client_id", "refresh_token_hmac_key", "refresh_token_counter", "scopes") FROM stdin;
 26a2acae-bc3a-4d6c-8600-5796c5d506f8	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-29 22:53:56.072462+00	2025-12-29 22:53:56.072462+00	\N	aal1	\N	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.104.3 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36	187.7.168.186	\N	\N	\N	\N	\N
 d6e40104-76a4-4ce6-9fdb-abd4d030acc8	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-29 22:37:47.719477+00	2025-12-30 01:56:23.432567+00	\N	aal1	\N	2025-12-30 01:56:23.430047	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 OPR/125.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
+8fbd195a-a2dd-4bd7-a3d1-75b7140a5241	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-28 23:30:22.392137+00	2026-01-03 01:42:03.822631+00	\N	aal1	\N	2026-01-03 01:42:03.821952	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 OPR/125.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
 fcf38773-e830-40ee-8c88-52877a95d967	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-17 17:36:20.787352+00	2025-12-17 23:30:16.55499+00	\N	aal1	\N	2025-12-17 23:30:16.554868	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
 4123bf6e-cf2b-480e-9ac7-2577ec9efeac	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-24 23:53:27.132225+00	2025-12-25 04:17:59.345153+00	\N	aal1	\N	2025-12-25 04:17:59.345035	Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 OPR/90.0.0.0	201.25.167.68	\N	\N	\N	\N	\N
 1b1f841d-20c9-4e85-b216-1c1bedf87237	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-16 11:41:32.114551+00	2025-12-26 13:14:07.384826+00	\N	aal1	\N	2025-12-26 13:14:07.384717	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 OPR/125.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
-8fbd195a-a2dd-4bd7-a3d1-75b7140a5241	eb3796bb-27da-4d91-96dc-0743c3ee136e	2025-12-28 23:30:22.392137+00	2025-12-29 22:52:09.855784+00	\N	aal1	\N	2025-12-29 22:52:09.855082	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 OPR/125.0.0.0	187.7.168.186	\N	\N	\N	\N	\N
 \.
 
 
@@ -234,11 +234,13 @@ COPY "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "revoked"
 00000000-0000-0000-0000-000000000000	474	xiahhljaxfxy	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-28 23:30:22.441771+00	2025-12-29 15:52:48.656065+00	\N	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
 00000000-0000-0000-0000-000000000000	475	6jzl25orfnub	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-29 15:52:48.683461+00	2025-12-29 16:52:18.359924+00	xiahhljaxfxy	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
 00000000-0000-0000-0000-000000000000	476	7djy7fgpy4sp	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-29 16:52:18.386014+00	2025-12-29 22:52:09.824027+00	6jzl25orfnub	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
-00000000-0000-0000-0000-000000000000	478	bq3yycqictpi	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-29 22:52:09.840003+00	2025-12-29 22:52:09.840003+00	7djy7fgpy4sp	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
 00000000-0000-0000-0000-000000000000	479	m5kfxie4rqay	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-29 22:53:56.081478+00	2025-12-29 22:53:56.081478+00	\N	26a2acae-bc3a-4d6c-8600-5796c5d506f8
 00000000-0000-0000-0000-000000000000	477	tmcrf3wvsdvv	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-29 22:37:47.750276+00	2025-12-29 23:41:36.361308+00	\N	d6e40104-76a4-4ce6-9fdb-abd4d030acc8
 00000000-0000-0000-0000-000000000000	480	stfpnro3qqye	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-29 23:41:36.38936+00	2025-12-30 01:56:23.373163+00	tmcrf3wvsdvv	d6e40104-76a4-4ce6-9fdb-abd4d030acc8
 00000000-0000-0000-0000-000000000000	481	bidgma5oecgb	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2025-12-30 01:56:23.399553+00	2025-12-30 01:56:23.399553+00	stfpnro3qqye	d6e40104-76a4-4ce6-9fdb-abd4d030acc8
+00000000-0000-0000-0000-000000000000	478	bq3yycqictpi	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2025-12-29 22:52:09.840003+00	2026-01-03 00:43:05.848734+00	7djy7fgpy4sp	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
+00000000-0000-0000-0000-000000000000	482	ediha3pmivc2	eb3796bb-27da-4d91-96dc-0743c3ee136e	t	2026-01-03 00:43:05.887567+00	2026-01-03 01:42:03.798692+00	bq3yycqictpi	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
+00000000-0000-0000-0000-000000000000	483	42b7apgyhxjw	eb3796bb-27da-4d91-96dc-0743c3ee136e	f	2026-01-03 01:42:03.807722+00	2026-01-03 01:42:03.807722+00	ediha3pmivc2	8fbd195a-a2dd-4bd7-a3d1-75b7140a5241
 \.
 
 
@@ -4785,6 +4787,27 @@ e90ccb74-894d-4d05-b65a-202661b652ce	\N	site_visit	site	repal	"{\\"visitor_id\\"
 a4d19fa3-5622-4c8d-aca6-5bdae547bd6f	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000053-voml20rm\\",\\"path\\":\\"/categorias/padaria-confeitaria\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 01:25:08.974806+00
 104d39ea-d1ff-4ba7-97ac-cb5965495ec7	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767317306289-kxzbdx5u\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 01:28:26.788038+00
 a1a23f31-c19c-4a92-9b9e-558ba8fb164c	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767317306503-icd25kwe\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 01:28:26.951102+00
+a4b54873-3222-4c1d-ac9b-2406f53b5bc8	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767326330172-yal6tirq\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2026-01-02 03:58:50.938953+00
+0de932c0-333a-43ad-aa39-896641cfb853	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767328106729-t03ebt2o\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 04:28:27.058193+00
+b917160c-cc1f-4395-a32a-6734ab2f8036	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767346106667-vvonxicc\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 09:28:26.943724+00
+31286618-235d-4c96-808a-785cb1d41a58	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000051-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 10:53:38.510538+00
+d009b2d3-a233-4ddf-96d9-d7917a7c0366	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000053-ymun4q1w\\",\\"path\\":\\"/categorias/mobiliario-inox/lixeiras\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 10:54:07.387005+00
+28481872-ffcb-457c-a210-24b149fd6167	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767351259289-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/141.0.7390.122 Safari/537.36	success	2026-01-02 10:54:20.494229+00
+da90f5c3-a0bc-4bf2-a304-5596f50e0f0b	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767351259308-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 10:54:20.576763+00
+93ead0f4-74ea-4352-a746-306eb9714607	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000051-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 17:34:41.090388+00
+bf60849f-6bed-482d-9c81-88db587883e7	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767375294606-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/141.0.7390.122 Safari/537.36	success	2026-01-02 17:34:55.984597+00
+e6e2db78-6dcb-4e8a-9abe-93deaa7df7ef	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767375294676-quo7dbbo\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 17:34:56.083141+00
+440d6824-3b3f-4cd9-8166-c006ff0d347d	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767379470131-omzv9ktc\\",\\"path\\":\\"/produto/purificador-de-agua-ibbl-due-immaginare\\"}"	\N	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Mobile/15E148 Safari/604.1	success	2026-01-02 18:44:30.881363+00
+d1407060-d20b-4ddc-b915-f4b0a42d4c3a	\N	product_view	product	3	"{\\"product_id\\":3,\\"product_name\\":\\"PURIFICADOR DE ÁGUA IBBL DUE IMMAGINARE\\",\\"slug\\":\\"purificador-de-agua-ibbl-due-immaginare\\"}"	\N	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Mobile/15E148 Safari/604.1	success	2026-01-02 18:44:31.517562+00
+8b084e1c-934b-463f-a7c0-6e6aae9514c4	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000051-zagqwl2c\\",\\"path\\":\\"/categorias\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 19:08:52.547283+00
+9e9669e0-2c3e-4f16-a715-d5599a428f4e	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767381327591-22zvo79g\\",\\"path\\":\\"/categorias/utilidades-domesticas/utensilios\\"}"	\N	Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm) Chrome/136.0.0.0 Safari/537.36	success	2026-01-02 19:15:28.853349+00
+cb9dc949-9a45-4e4a-b619-42f27563320c	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767382106194-ix72gxme\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 19:28:26.705309+00
+d0bf6335-3766-44a1-ad8a-654de296e659	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767382060123-voml20rm\\",\\"path\\":\\"/categorias/padaria-confeitaria\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 19:28:30.54991+00
+0d55469d-7f6b-4932-bd04-32f5ba177d96	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767382741053-voml20rm\\",\\"path\\":\\"/categorias/padaria-confeitaria\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 19:43:07.21396+00
+d41a8993-402f-4288-9d05-f21e5b571f00	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767312000053-voml20rm\\",\\"path\\":\\"/categorias/acougue\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 19:52:49.194113+00
+aa171965-e3a3-4f77-a014-cb7845519951	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767384378053-voml20rm\\",\\"path\\":\\"/categorias/mobiliario-inox\\"}"	\N	Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.122 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)	success	2026-01-02 20:09:45.870705+00
+b88c7b29-4088-4dad-906c-bbcc4457bb46	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767385706531-43w24p7p\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/118.0.5993.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)	success	2026-01-02 20:28:27.015652+00
+cfa9cb4f-0e2f-4b29-963f-0e385df3677f	\N	site_visit	site	repal	"{\\"visitor_id\\":\\"1767404262659-qsdensk1\\",\\"path\\":\\"/\\"}"	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36	success	2026-01-03 01:37:43.308718+00
 \.
 
 
@@ -6325,7 +6348,7 @@ COPY "storage"."vector_indexes" ("id", "name", "bucket_id", "data_type", "dimens
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 481, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 483, true);
 
 
 --
@@ -6388,6 +6411,6 @@ SELECT pg_catalog.setval('"public"."stores_id_seq"', 1, true);
 -- PostgreSQL database dump complete
 --
 
--- \unrestrict ZIN0ybqTleJlkrNqm2YHs0fNsoJ9AhhyiiCPAJBbqmfuK6whyfyFjNswUpCzFjU
+-- \unrestrict Z5KQ2f95Yf1mGmus5mot0xwtQ8VIln1qwGpSnfBbY57kpqeOoCPfAPx8FKEDjAg
 
 RESET ALL;
