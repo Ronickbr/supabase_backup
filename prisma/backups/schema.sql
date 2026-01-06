@@ -320,7 +320,8 @@ CREATE TABLE IF NOT EXISTS "public"."products" (
     "updated_at" timestamp(6) without time zone,
     "featured_on_homepage" boolean DEFAULT false,
     "featured_in_dropdown" boolean DEFAULT false,
-    "is_disabled" boolean DEFAULT false
+    "is_disabled" boolean DEFAULT false,
+    "price" numeric(10,2)
 );
 
 
@@ -356,7 +357,15 @@ CREATE TABLE IF NOT EXISTS "public"."promotions" (
     "end_date" "date",
     "active" boolean DEFAULT true NOT NULL,
     "created_at" timestamp(6) without time zone,
-    "updated_at" timestamp(6) without time zone
+    "updated_at" timestamp(6) without time zone,
+    "image_url" "text",
+    "link_url" "text",
+    "trigger_type" "text",
+    "trigger_value" numeric,
+    "template_type" "text",
+    "content_layout" "jsonb",
+    CONSTRAINT "promotions_template_type_check" CHECK (("template_type" = ANY (ARRAY['first_purchase'::"text", 'abandoned_cart'::"text", 'exit_intent'::"text", 'special_date'::"text", 'custom'::"text"]))),
+    CONSTRAINT "promotions_trigger_type_check" CHECK (("trigger_type" = ANY (ARRAY['exit_intent'::"text", 'time'::"text", 'scroll'::"text", 'inactivity'::"text"])))
 );
 
 
@@ -633,10 +642,6 @@ CREATE POLICY "Admin Write Access on promotion_products" ON "public"."promotion_
 
 
 
-CREATE POLICY "Admin Write Access on promotions" ON "public"."promotions" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
-
-
-
 CREATE POLICY "Admin Write Access on site_settings" ON "public"."site_settings" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
 
 
@@ -707,6 +712,10 @@ CREATE POLICY "Delete de produtos por autenticados" ON "public"."products" FOR D
 
 
 
+CREATE POLICY "Gestão por admins" ON "public"."promotions" TO "authenticated" USING (true) WITH CHECK (true);
+
+
+
 CREATE POLICY "Insert de banners por autenticados" ON "public"."banners" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
 
 
@@ -720,6 +729,10 @@ CREATE POLICY "Insert de marcas por autenticados" ON "public"."brands" FOR INSER
 
 
 CREATE POLICY "Insert de produtos por autenticados" ON "public"."products" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
+
+
+
+CREATE POLICY "Leitura pública" ON "public"."promotions" FOR SELECT USING (true);
 
 
 
@@ -764,10 +777,6 @@ CREATE POLICY "Public Read Access on admin_users" ON "public"."admin_users" FOR 
 
 
 CREATE POLICY "Public Read Access on promotion_products" ON "public"."promotion_products" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "Public Read Access on promotions" ON "public"."promotions" FOR SELECT USING (true);
 
 
 
