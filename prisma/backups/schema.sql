@@ -73,6 +73,7 @@ ALTER TYPE "public"."user_role" OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean DEFAULT true, "file_size_limit" integer DEFAULT 5242880, "allowed_mime_types" "text"[] DEFAULT ARRAY['image/jpeg'::"text", 'image/jpg'::"text", 'image/png'::"text", 'image/gif'::"text", 'image/svg+xml'::"text", 'image/webp'::"text"]) RETURNS "void"
     LANGUAGE "plpgsql"
+    SET "search_path" TO ''
     AS $$
 BEGIN
   -- Verificar se o bucket já existe
@@ -94,6 +95,7 @@ ALTER FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_
 
 CREATE OR REPLACE FUNCTION "public"."is_admin"() RETURNS boolean
     LANGUAGE "sql" STABLE
+    SET "search_path" TO ''
     AS $$
 select coalesce((current_setting('request.jwt.claims', true)::jsonb -> 'user_metadata' ->> 'role') in ('admin','super_admin'), false);
 $$;
@@ -104,6 +106,7 @@ ALTER FUNCTION "public"."is_admin"() OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "public"."is_super_admin"() RETURNS boolean
     LANGUAGE "sql" STABLE
+    SET "search_path" TO ''
     AS $$
 select coalesce((current_setting('request.jwt.claims', true)::jsonb -> 'user_metadata' ->> 'role') = 'super_admin', false);
 $$;
@@ -548,6 +551,10 @@ ALTER TABLE ONLY "public"."users"
 
 
 
+CREATE INDEX "idx_activity_logs_user_id" ON "public"."activity_logs" USING "btree" ("user_id");
+
+
+
 CREATE INDEX "idx_admin_users_active" ON "public"."admin_users" USING "btree" ("active");
 
 
@@ -634,6 +641,18 @@ ALTER TABLE ONLY "public"."promotion_products"
 
 
 
+CREATE POLICY "Admin Delete Access on users" ON "public"."users" FOR DELETE USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+
+
+
+CREATE POLICY "Admin Insert Access on users" ON "public"."users" FOR INSERT WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+
+
+
+CREATE POLICY "Admin Update Access on users" ON "public"."users" FOR UPDATE USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+
+
+
 CREATE POLICY "Admin Write Access on admin_users" ON "public"."admin_users" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
 
 
@@ -650,10 +669,6 @@ CREATE POLICY "Admin Write Access on stores" ON "public"."stores" TO "authentica
 
 
 
-CREATE POLICY "Admin Write Access on users" ON "public"."users" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
-
-
-
 CREATE POLICY "Admin users can view all activity logs" ON "public"."activity_logs" FOR SELECT USING ((EXISTS ( SELECT 1
    FROM "public"."admin_users"
   WHERE (("admin_users"."id" = "auth"."uid"()) AND (("admin_users"."role")::"text" = ANY ((ARRAY['admin'::character varying, 'super_admin'::character varying])::"text"[]))))));
@@ -661,10 +676,6 @@ CREATE POLICY "Admin users can view all activity logs" ON "public"."activity_log
 
 
 CREATE POLICY "Admins can perform all actions" ON "public"."admin_users" USING (("auth"."role"() = 'admin'::"text"));
-
-
-
-CREATE POLICY "Anyone can create leads" ON "public"."leads" FOR INSERT WITH CHECK (true);
 
 
 
@@ -696,39 +707,7 @@ CREATE POLICY "Authenticated users can view leads" ON "public"."leads" FOR SELEC
 
 
 
-CREATE POLICY "Delete de banners por autenticados" ON "public"."banners" FOR DELETE TO "authenticated" USING (true);
-
-
-
-CREATE POLICY "Delete de imagens por autenticados" ON "public"."product_images" FOR DELETE TO "authenticated" USING (true);
-
-
-
-CREATE POLICY "Delete de marcas por autenticados" ON "public"."brands" FOR DELETE TO "authenticated" USING (true);
-
-
-
-CREATE POLICY "Delete de produtos por autenticados" ON "public"."products" FOR DELETE TO "authenticated" USING (true);
-
-
-
-CREATE POLICY "Gestão por admins" ON "public"."promotions" TO "authenticated" USING (true) WITH CHECK (true);
-
-
-
-CREATE POLICY "Insert de banners por autenticados" ON "public"."banners" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
-
-
-
-CREATE POLICY "Insert de imagens por autenticados" ON "public"."product_images" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
-
-
-
-CREATE POLICY "Insert de marcas por autenticados" ON "public"."brands" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
-
-
-
-CREATE POLICY "Insert de produtos por autenticados" ON "public"."products" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Gestão por admins" ON "public"."promotions" TO "authenticated" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
 
 
 
@@ -760,10 +739,6 @@ CREATE POLICY "Permitir exclusão de leads para usuários autenticados" ON "publ
 
 
 
-CREATE POLICY "Permitir inserção de leads para todos" ON "public"."leads" FOR INSERT WITH CHECK (true);
-
-
-
 CREATE POLICY "Permitir leitura de categorias ativas" ON "public"."categories" FOR SELECT USING (("active" = true));
 
 
@@ -789,22 +764,6 @@ CREATE POLICY "Public Read Access on stores" ON "public"."stores" FOR SELECT USI
 
 
 CREATE POLICY "Public Read Access on users" ON "public"."users" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "Update de banners por autenticados" ON "public"."banners" FOR UPDATE TO "authenticated" USING (true) WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
-
-
-
-CREATE POLICY "Update de imagens por autenticados" ON "public"."product_images" FOR UPDATE TO "authenticated" USING (true) WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
-
-
-
-CREATE POLICY "Update de marcas por autenticados" ON "public"."brands" FOR UPDATE TO "authenticated" USING (true) WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
-
-
-
-CREATE POLICY "Update de produtos por autenticados" ON "public"."products" FOR UPDATE TO "authenticated" USING (true) WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
 
 
 
@@ -853,13 +812,25 @@ CREATE POLICY "anon_select_stores" ON "public"."stores" FOR SELECT TO "anon" USI
 ALTER TABLE "public"."banners" ENABLE ROW LEVEL SECURITY;
 
 
+CREATE POLICY "banners_write_admin" ON "public"."banners" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
+
+
+
 ALTER TABLE "public"."brands" ENABLE ROW LEVEL SECURITY;
+
+
+CREATE POLICY "brands_write_admin" ON "public"."brands" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
+
 
 
 ALTER TABLE "public"."categories" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."leads" ENABLE ROW LEVEL SECURITY;
+
+
+CREATE POLICY "leads_insert_public" ON "public"."leads" FOR INSERT WITH CHECK (true);
+
 
 
 ALTER TABLE "public"."product_images" ENABLE ROW LEVEL SECURITY;
@@ -898,6 +869,9 @@ CREATE POLICY "products_update_admin" ON "public"."products" FOR UPDATE USING ("
 
 CREATE POLICY "products_write_admin" ON "public"."products" FOR INSERT WITH CHECK ("public"."is_admin"());
 
+
+
+ALTER TABLE "public"."promotion_products" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."promotions" ENABLE ROW LEVEL SECURITY;
