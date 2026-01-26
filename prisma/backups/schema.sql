@@ -17,6 +17,20 @@ COMMENT ON SCHEMA "public" IS 'standard public schema';
 
 
 
+CREATE EXTENSION IF NOT EXISTS "hypopg" WITH SCHEMA "extensions";
+
+
+
+
+
+
+CREATE EXTENSION IF NOT EXISTS "index_advisor" WITH SCHEMA "extensions";
+
+
+
+
+
+
 CREATE EXTENSION IF NOT EXISTS "pg_graphql" WITH SCHEMA "graphql";
 
 
@@ -551,11 +565,11 @@ ALTER TABLE ONLY "public"."users"
 
 
 
+CREATE INDEX "idx_activity_logs_action" ON "public"."activity_logs" USING "btree" ("action");
+
+
+
 CREATE INDEX "idx_activity_logs_user_id" ON "public"."activity_logs" USING "btree" ("user_id");
-
-
-
-CREATE INDEX "idx_admin_users_active" ON "public"."admin_users" USING "btree" ("active");
 
 
 
@@ -575,19 +589,7 @@ CREATE INDEX "idx_categories_parent_id" ON "public"."categories" USING "btree" (
 
 
 
-CREATE INDEX "idx_featured_product_id" ON "public"."categories" USING "btree" ("featured_product_id");
-
-
-
 CREATE INDEX "idx_leads_created_at" ON "public"."leads" USING "btree" ("created_at");
-
-
-
-CREATE INDEX "idx_leads_email" ON "public"."leads" USING "btree" ("email");
-
-
-
-CREATE INDEX "idx_leads_status" ON "public"."leads" USING "btree" ("status");
 
 
 
@@ -595,7 +597,15 @@ CREATE INDEX "idx_product_images_product_id" ON "public"."product_images" USING 
 
 
 
+CREATE INDEX "idx_products_active_created_at" ON "public"."products" USING "btree" ("active", "created_at" DESC);
+
+
+
 CREATE INDEX "idx_products_category_id" ON "public"."products" USING "btree" ("category_id");
+
+
+
+CREATE INDEX "idx_products_name" ON "public"."products" USING "btree" ("name");
 
 
 
@@ -641,73 +651,123 @@ ALTER TABLE ONLY "public"."promotion_products"
 
 
 
-CREATE POLICY "Admin Delete Access on users" ON "public"."users" FOR DELETE USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Delete Access on admin_users" ON "public"."admin_users" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Admin Insert Access on users" ON "public"."users" FOR INSERT WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Delete Access on stores" ON "public"."stores" FOR DELETE TO "authenticated" USING ("public"."is_admin"());
 
 
 
-CREATE POLICY "Admin Update Access on users" ON "public"."users" FOR UPDATE USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Delete Access on users" ON "public"."users" FOR DELETE TO "authenticated" USING (((( SELECT "auth"."jwt"() AS "jwt") ->> 'is_admin'::"text") = 'true'::"text"));
 
 
 
-CREATE POLICY "Admin Write Access on admin_users" ON "public"."admin_users" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Delete Policy" ON "public"."promotion_products" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Admin Write Access on promotion_products" ON "public"."promotion_products" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Insert Access on stores" ON "public"."stores" FOR INSERT TO "authenticated" WITH CHECK ("public"."is_admin"());
 
 
 
-CREATE POLICY "Admin Write Access on site_settings" ON "public"."site_settings" USING ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK ((("auth"."jwt"() ->> 'is_admin'::"text") = 'true'::"text"));
+CREATE POLICY "Admin Insert Access on users" ON "public"."users" FOR INSERT TO "authenticated" WITH CHECK (((( SELECT "auth"."jwt"() AS "jwt") ->> 'is_admin'::"text") = 'true'::"text"));
 
 
 
-CREATE POLICY "Admin Write Access on stores" ON "public"."stores" TO "authenticated" USING (true) WITH CHECK (true);
+CREATE POLICY "Admin Update Access on admin_users" ON "public"."admin_users" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Admin users can view all activity logs" ON "public"."activity_logs" FOR SELECT USING ((EXISTS ( SELECT 1
-   FROM "public"."admin_users"
-  WHERE (("admin_users"."id" = "auth"."uid"()) AND (("admin_users"."role")::"text" = ANY ((ARRAY['admin'::character varying, 'super_admin'::character varying])::"text"[]))))));
+CREATE POLICY "Admin Update Access on stores" ON "public"."stores" FOR UPDATE TO "authenticated" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
 
 
 
-CREATE POLICY "Admins can perform all actions" ON "public"."admin_users" USING (("auth"."role"() = 'admin'::"text"));
+CREATE POLICY "Admin Update Access on users" ON "public"."users" FOR UPDATE TO "authenticated" USING (((( SELECT "auth"."jwt"() AS "jwt") ->> 'is_admin'::"text") = 'true'::"text")) WITH CHECK (((( SELECT "auth"."jwt"() AS "jwt") ->> 'is_admin'::"text") = 'true'::"text"));
 
 
 
-CREATE POLICY "Anyone can view active categories" ON "public"."categories" FOR SELECT USING (("active" = true));
+CREATE POLICY "Admin Update Policy" ON "public"."promotion_products" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Authenticated users can delete leads" ON "public"."leads" FOR DELETE USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Admin Write Access on admin_users" ON "public"."admin_users" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Authenticated users can insert activity logs" ON "public"."activity_logs" FOR INSERT WITH CHECK (("auth"."uid"() = "user_id"));
+CREATE POLICY "Admin Write Policy" ON "public"."promotion_products" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Authenticated users can manage categories" ON "public"."categories" USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Anon insert activity logs" ON "public"."activity_logs" FOR INSERT TO "anon" WITH CHECK (((("action")::"text" = ANY (ARRAY['product_view'::"text", 'site_visit'::"text", 'whatsapp_click'::"text"])) AND (("resource_type")::"text" = ANY (ARRAY['product'::"text", 'site'::"text", 'store'::"text"])) AND ((COALESCE("resource_id", ''::character varying))::"text" <> ''::"text")));
 
 
 
-CREATE POLICY "Authenticated users can update leads" ON "public"."leads" FOR UPDATE USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Authenticated users can delete leads" ON "public"."leads" FOR DELETE TO "authenticated" USING ((( SELECT "auth"."role"() AS "role") = 'authenticated'::"text"));
 
 
 
-CREATE POLICY "Authenticated users can view all categories" ON "public"."categories" FOR SELECT USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Authenticated users can insert activity logs" ON "public"."activity_logs" FOR INSERT TO "authenticated" WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
 
 
 
-CREATE POLICY "Authenticated users can view leads" ON "public"."leads" FOR SELECT USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Authenticated users can update leads" ON "public"."leads" FOR UPDATE TO "authenticated" USING ((( SELECT "auth"."role"() AS "role") = 'authenticated'::"text"));
 
 
 
-CREATE POLICY "Gestão por admins" ON "public"."promotions" TO "authenticated" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
+CREATE POLICY "Authenticated users can view activity logs" ON "public"."activity_logs" FOR SELECT TO "authenticated" USING ((( SELECT "public"."is_admin"() AS "is_admin") OR (( SELECT "auth"."uid"() AS "uid") = "user_id")));
+
+
+
+CREATE POLICY "Authenticated users can view leads" ON "public"."leads" FOR SELECT TO "authenticated" USING ((( SELECT "auth"."role"() AS "role") = 'authenticated'::"text"));
+
+
+
+CREATE POLICY "Banners Delete Policy" ON "public"."banners" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Banners Read Policy" ON "public"."banners" FOR SELECT USING ((("active" = true) OR ( SELECT "public"."is_admin"() AS "is_admin")));
+
+
+
+CREATE POLICY "Banners Update Policy" ON "public"."banners" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Banners Write Policy" ON "public"."banners" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Brands Delete Policy" ON "public"."brands" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Brands Read Policy" ON "public"."brands" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Brands Update Policy" ON "public"."brands" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Brands Write Policy" ON "public"."brands" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Categories Delete Policy" ON "public"."categories" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Categories Read Policy" ON "public"."categories" FOR SELECT USING ((("active" = true) OR ( SELECT "public"."is_admin"() AS "is_admin")));
+
+
+
+CREATE POLICY "Categories Update Policy" ON "public"."categories" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Categories Write Policy" ON "public"."categories" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
@@ -715,35 +775,47 @@ CREATE POLICY "Leitura pública" ON "public"."promotions" FOR SELECT USING (true
 
 
 
-CREATE POLICY "Leitura pública de banners ativos" ON "public"."banners" FOR SELECT USING (("active" = true));
+CREATE POLICY "Product Images Delete Policy" ON "public"."product_images" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Leitura pública de imagens de produto" ON "public"."product_images" FOR SELECT USING (true);
+CREATE POLICY "Product Images Read Policy" ON "public"."product_images" FOR SELECT USING (true);
 
 
 
-CREATE POLICY "Leitura pública de marcas" ON "public"."brands" FOR SELECT USING (true);
+CREATE POLICY "Product Images Update Policy" ON "public"."product_images" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Leitura pública de produtos ativos" ON "public"."products" FOR SELECT USING ((("active" = true) AND (("is_disabled" IS NULL) OR ("is_disabled" = false))));
+CREATE POLICY "Product Images Write Policy" ON "public"."product_images" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Permitir atualização de leads para usuários autenticados" ON "public"."leads" FOR UPDATE USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Products Delete Policy" ON "public"."products" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Permitir exclusão de leads para usuários autenticados" ON "public"."leads" FOR DELETE USING (("auth"."role"() = 'authenticated'::"text"));
+CREATE POLICY "Products Read Policy" ON "public"."products" FOR SELECT USING (((("active" = true) AND (("is_disabled" IS NULL) OR ("is_disabled" = false))) OR ( SELECT "public"."is_admin"() AS "is_admin")));
 
 
 
-CREATE POLICY "Permitir leitura de categorias ativas" ON "public"."categories" FOR SELECT USING (("active" = true));
+CREATE POLICY "Products Update Policy" ON "public"."products" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
-CREATE POLICY "Permitir leitura de leads para todos" ON "public"."leads" FOR SELECT USING (true);
+CREATE POLICY "Products Write Policy" ON "public"."products" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Promotions Delete Policy" ON "public"."promotions" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Promotions Update Policy" ON "public"."promotions" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Promotions Write Policy" ON "public"."promotions" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
@@ -767,7 +839,15 @@ CREATE POLICY "Public Read Access on users" ON "public"."users" FOR SELECT USING
 
 
 
-CREATE POLICY "Users can view their own activity logs" ON "public"."activity_logs" FOR SELECT USING (("auth"."uid"() = "user_id"));
+CREATE POLICY "Site Settings Delete Policy" ON "public"."site_settings" FOR DELETE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Site Settings Update Policy" ON "public"."site_settings" FOR UPDATE TO "authenticated" USING (( SELECT "public"."is_admin"() AS "is_admin"));
+
+
+
+CREATE POLICY "Site Settings Write Policy" ON "public"."site_settings" FOR INSERT TO "authenticated" WITH CHECK (( SELECT "public"."is_admin"() AS "is_admin"));
 
 
 
@@ -777,50 +857,14 @@ ALTER TABLE "public"."activity_logs" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."admin_users" ENABLE ROW LEVEL SECURITY;
 
 
-CREATE POLICY "anon_insert_activity_logs" ON "public"."activity_logs" FOR INSERT TO "anon" WITH CHECK (((("action")::"text" = ANY ((ARRAY['product_view'::character varying, 'site_visit'::character varying, 'whatsapp_click'::character varying])::"text"[])) AND (("resource_type")::"text" = ANY ((ARRAY['product'::character varying, 'site'::character varying, 'store'::character varying])::"text"[])) AND ((COALESCE("resource_id", ''::character varying))::"text" <> ''::"text")));
-
-
-
 CREATE POLICY "anon_insert_leads" ON "public"."leads" FOR INSERT TO "anon" WITH CHECK ((((COALESCE("name", ''::character varying))::"text" <> ''::"text") AND (((COALESCE("email", ''::character varying))::"text" <> ''::"text") OR ((COALESCE("phone", ''::character varying))::"text" <> ''::"text"))));
-
-
-
-CREATE POLICY "anon_select_activity_logs" ON "public"."activity_logs" FOR SELECT TO "anon" USING (true);
-
-
-
-CREATE POLICY "anon_select_categories" ON "public"."categories" FOR SELECT TO "anon" USING (("active" = true));
-
-
-
-CREATE POLICY "anon_select_product_images" ON "public"."product_images" FOR SELECT TO "anon" USING (true);
-
-
-
-CREATE POLICY "anon_select_products" ON "public"."products" FOR SELECT TO "anon" USING (("active" = true));
-
-
-
-CREATE POLICY "anon_select_site_settings" ON "public"."site_settings" FOR SELECT TO "anon" USING (true);
-
-
-
-CREATE POLICY "anon_select_stores" ON "public"."stores" FOR SELECT TO "anon" USING (true);
 
 
 
 ALTER TABLE "public"."banners" ENABLE ROW LEVEL SECURITY;
 
 
-CREATE POLICY "banners_write_admin" ON "public"."banners" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
-
-
-
 ALTER TABLE "public"."brands" ENABLE ROW LEVEL SECURITY;
-
-
-CREATE POLICY "brands_write_admin" ON "public"."brands" USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
-
 
 
 ALTER TABLE "public"."categories" ENABLE ROW LEVEL SECURITY;
@@ -829,46 +873,10 @@ ALTER TABLE "public"."categories" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."leads" ENABLE ROW LEVEL SECURITY;
 
 
-CREATE POLICY "leads_insert_public" ON "public"."leads" FOR INSERT WITH CHECK (true);
-
-
-
 ALTER TABLE "public"."product_images" ENABLE ROW LEVEL SECURITY;
 
 
-CREATE POLICY "product_images_delete_admin" ON "public"."product_images" FOR DELETE USING ("public"."is_admin"());
-
-
-
-CREATE POLICY "product_images_select_all" ON "public"."product_images" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "product_images_update_admin" ON "public"."product_images" FOR UPDATE USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
-
-
-
-CREATE POLICY "product_images_write_admin" ON "public"."product_images" FOR INSERT WITH CHECK ("public"."is_admin"());
-
-
-
 ALTER TABLE "public"."products" ENABLE ROW LEVEL SECURITY;
-
-
-CREATE POLICY "products_delete_admin" ON "public"."products" FOR DELETE USING ("public"."is_admin"());
-
-
-
-CREATE POLICY "products_select_all" ON "public"."products" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "products_update_admin" ON "public"."products" FOR UPDATE USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
-
-
-
-CREATE POLICY "products_write_admin" ON "public"."products" FOR INSERT WITH CHECK ("public"."is_admin"());
-
 
 
 ALTER TABLE "public"."promotion_products" ENABLE ROW LEVEL SECURITY;
@@ -878,18 +886,6 @@ ALTER TABLE "public"."promotions" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."site_settings" ENABLE ROW LEVEL SECURITY;
-
-
-CREATE POLICY "site_settings_select_all" ON "public"."site_settings" FOR SELECT USING (true);
-
-
-
-CREATE POLICY "site_settings_update_admin" ON "public"."site_settings" FOR UPDATE USING ("public"."is_admin"()) WITH CHECK ("public"."is_admin"());
-
-
-
-CREATE POLICY "site_settings_write_admin" ON "public"."site_settings" FOR INSERT WITH CHECK ("public"."is_admin"());
-
 
 
 ALTER TABLE "public"."stores" ENABLE ROW LEVEL SECURITY;
@@ -1064,6 +1060,42 @@ GRANT USAGE ON SCHEMA "public" TO "service_role";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 GRANT ALL ON FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) TO "anon";
 GRANT ALL ON FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) TO "service_role";
@@ -1085,6 +1117,12 @@ GRANT ALL ON FUNCTION "public"."is_super_admin"() TO "service_role";
 GRANT ALL ON FUNCTION "public"."touch_updated_at"() TO "anon";
 GRANT ALL ON FUNCTION "public"."touch_updated_at"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."touch_updated_at"() TO "service_role";
+
+
+
+
+
+
 
 
 
