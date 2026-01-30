@@ -272,7 +272,9 @@ CREATE TABLE IF NOT EXISTS "public"."leads" (
     "message" "text",
     "status" character varying(50) DEFAULT 'new'::character varying,
     "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    "product_name" "text",
+    "source" "text"
 );
 
 
