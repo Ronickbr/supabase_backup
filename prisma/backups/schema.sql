@@ -107,6 +107,17 @@ $$;
 ALTER FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) OWNER TO "postgres";
 
 
+CREATE OR REPLACE FUNCTION "public"."get_new_contacts_count"() RETURNS integer
+    LANGUAGE "sql" SECURITY DEFINER
+    SET "search_path" TO 'public'
+    AS $$
+  SELECT count(*)::integer FROM leads WHERE status = 'novo';
+$$;
+
+
+ALTER FUNCTION "public"."get_new_contacts_count"() OWNER TO "postgres";
+
+
 CREATE OR REPLACE FUNCTION "public"."is_admin"() RETURNS boolean
     LANGUAGE "sql" STABLE
     SET "search_path" TO ''
@@ -713,6 +724,10 @@ CREATE POLICY "Authenticated users can insert activity logs" ON "public"."activi
 
 
 
+CREATE POLICY "Authenticated users can insert leads" ON "public"."leads" FOR INSERT TO "authenticated" WITH CHECK (("auth"."role"() = 'authenticated'::"text"));
+
+
+
 CREATE POLICY "Authenticated users can update leads" ON "public"."leads" FOR UPDATE TO "authenticated" USING ((( SELECT "auth"."role"() AS "role") = 'authenticated'::"text"));
 
 
@@ -1101,6 +1116,12 @@ GRANT USAGE ON SCHEMA "public" TO "service_role";
 GRANT ALL ON FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) TO "anon";
 GRANT ALL ON FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" "text", "is_public" boolean, "file_size_limit" integer, "allowed_mime_types" "text"[]) TO "service_role";
+
+
+
+GRANT ALL ON FUNCTION "public"."get_new_contacts_count"() TO "anon";
+GRANT ALL ON FUNCTION "public"."get_new_contacts_count"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."get_new_contacts_count"() TO "service_role";
 
 
 
