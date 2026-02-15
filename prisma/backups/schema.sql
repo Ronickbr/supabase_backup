@@ -90,17 +90,20 @@ CREATE OR REPLACE FUNCTION "public"."check_quote_access"("token_input" "uuid") R
     SET "search_path" TO 'public'
     AS $$
 DECLARE
-  found_password text;
+  record_exists boolean;
+  has_pass boolean;
 BEGIN
-  SELECT access_password INTO found_password
+  SELECT EXISTS(SELECT 1 FROM quotes WHERE public_token = token_input),
+         (access_password IS NOT NULL AND access_password <> '')
+  INTO record_exists, has_pass
   FROM quotes
   WHERE public_token = token_input;
-  
-  IF NOT FOUND THEN
+
+  IF NOT record_exists THEN
     RETURN json_build_object('exists', false, 'requires_password', false);
   END IF;
 
-  RETURN json_build_object('exists', true, 'requires_password', (found_password IS NOT NULL AND found_password <> ''));
+  RETURN json_build_object('exists', true, 'requires_password', has_pass);
 END;
 $$;
 
@@ -113,12 +116,9 @@ CREATE OR REPLACE FUNCTION "public"."create_bucket_if_not_exists"("bucket_name" 
     SET "search_path" TO ''
     AS $$
 BEGIN
-  -- Verificar se o bucket já existe
   IF NOT EXISTS (SELECT 1 FROM storage.buckets WHERE id = bucket_name) THEN
-    -- Criar o bucket
     INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
     VALUES (bucket_name, bucket_name, is_public, file_size_limit, allowed_mime_types);
-    
     RAISE NOTICE 'Bucket % criado com sucesso', bucket_name;
   ELSE
     RAISE NOTICE 'Bucket % já existe', bucket_name;
@@ -187,13 +187,34 @@ BEGIN
     OR
     (q.access_password = password_input)
   );
-
   RETURN result;
 END;
 $$;
 
 
 ALTER FUNCTION "public"."get_quote_secure"("token_input" "uuid", "password_input" "text") OWNER TO "postgres";
+
+
+CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    AS $$
+BEGIN
+  INSERT INTO public.profiles (id, email, company_name, name, subscription_status, trial_ends_at)
+  VALUES (
+    new.id, 
+    new.email, 
+    COALESCE(new.raw_user_meta_data->>'company_name', 'Minha Empresa'), 
+    'Gestor',
+    'trial',
+    (now() + interval '30 days')
+  )
+  ON CONFLICT (id) DO NOTHING;
+  RETURN new;
+END;
+$$;
+
+
+ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
 
 
 CREATE OR REPLACE FUNCTION "public"."is_admin"() RETURNS boolean
@@ -1227,6 +1248,12 @@ GRANT ALL ON FUNCTION "public"."get_new_contacts_count"() TO "service_role";
 GRANT ALL ON FUNCTION "public"."get_quote_secure"("token_input" "uuid", "password_input" "text") TO "anon";
 GRANT ALL ON FUNCTION "public"."get_quote_secure"("token_input" "uuid", "password_input" "text") TO "authenticated";
 GRANT ALL ON FUNCTION "public"."get_quote_secure"("token_input" "uuid", "password_input" "text") TO "service_role";
+
+
+
+GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "anon";
+GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "service_role";
 
 
 
