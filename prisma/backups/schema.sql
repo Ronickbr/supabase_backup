@@ -31,13 +31,6 @@ CREATE EXTENSION IF NOT EXISTS "index_advisor" WITH SCHEMA "extensions";
 
 
 
-CREATE EXTENSION IF NOT EXISTS "pg_graphql" WITH SCHEMA "graphql";
-
-
-
-
-
-
 CREATE EXTENSION IF NOT EXISTS "pg_stat_statements" WITH SCHEMA "extensions";
 
 
@@ -1379,9 +1372,6 @@ GRANT ALL ON FUNCTION "public"."vector"("public"."vector", integer, boolean) TO 
 GRANT ALL ON FUNCTION "public"."vector"("public"."vector", integer, boolean) TO "anon";
 GRANT ALL ON FUNCTION "public"."vector"("public"."vector", integer, boolean) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."vector"("public"."vector", integer, boolean) TO "service_role";
-
-
-
 
 
 
