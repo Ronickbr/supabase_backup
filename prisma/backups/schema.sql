@@ -748,6 +748,14 @@ CREATE INDEX "idx_activity_logs_action" ON "public"."activity_logs" USING "btree
 
 
 
+CREATE INDEX "idx_activity_logs_created_at" ON "public"."activity_logs" USING "btree" ("created_at" DESC);
+
+
+
+CREATE INDEX "idx_activity_logs_resource_id" ON "public"."activity_logs" USING "btree" ("resource_id");
+
+
+
 CREATE INDEX "idx_activity_logs_user_id" ON "public"."activity_logs" USING "btree" ("user_id");
 
 
@@ -772,7 +780,15 @@ CREATE INDEX "idx_leads_created_at" ON "public"."leads" USING "btree" ("created_
 
 
 
+CREATE INDEX "idx_leads_status" ON "public"."leads" USING "btree" ("status");
+
+
+
 CREATE INDEX "idx_product_images_product_id" ON "public"."product_images" USING "btree" ("product_id");
+
+
+
+CREATE INDEX "idx_products_active" ON "public"."products" USING "btree" ("active");
 
 
 
@@ -785,6 +801,10 @@ CREATE INDEX "idx_products_category_id" ON "public"."products" USING "btree" ("c
 
 
 CREATE INDEX "idx_products_name" ON "public"."products" USING "btree" ("name");
+
+
+
+CREATE INDEX "idx_products_slug" ON "public"."products" USING "btree" ("slug");
 
 
 
@@ -1040,7 +1060,7 @@ ALTER TABLE "public"."activity_logs" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."admin_users" ENABLE ROW LEVEL SECURITY;
 
 
-CREATE POLICY "anon_insert_activity_logs" ON "public"."activity_logs" FOR INSERT TO "anon" WITH CHECK (((("action")::"text" = ANY ((ARRAY['product_view'::character varying, 'site_visit'::character varying, 'whatsapp_click'::character varying])::"text"[])) AND (("resource_type")::"text" = ANY ((ARRAY['product'::character varying, 'site'::character varying, 'store'::character varying])::"text"[]))));
+CREATE POLICY "anon_insert_activity_logs" ON "public"."activity_logs" FOR INSERT TO "anon" WITH CHECK (((("action")::"text" = ANY ((ARRAY['product_view'::character varying, 'site_visit'::character varying, 'whatsapp_click'::character varying])::"text"[])) AND (("resource_type")::"text" = ANY ((ARRAY['product'::character varying, 'site'::character varying, 'store'::character varying])::"text"[])) AND ((COALESCE("resource_id", ''::character varying))::"text" <> ''::"text")));
 
 
 
@@ -1048,7 +1068,35 @@ CREATE POLICY "anon_insert_leads" ON "public"."leads" FOR INSERT TO "anon" WITH 
 
 
 
-CREATE POLICY "anon_select_activity_logs" ON "public"."activity_logs" FOR SELECT TO "anon" USING (true);
+CREATE POLICY "anon_select_activity_logs" ON "public"."activity_logs" FOR SELECT TO "anon" USING ((("action")::"text" = ANY ((ARRAY['product_view'::character varying, 'site_visit'::character varying, 'whatsapp_click'::character varying])::"text"[])));
+
+
+
+CREATE POLICY "anon_select_banners" ON "public"."banners" FOR SELECT TO "anon" USING (true);
+
+
+
+CREATE POLICY "anon_select_brands" ON "public"."brands" FOR SELECT TO "anon" USING (true);
+
+
+
+CREATE POLICY "anon_select_categories" ON "public"."categories" FOR SELECT TO "anon" USING (("active" = true));
+
+
+
+CREATE POLICY "anon_select_product_images" ON "public"."product_images" FOR SELECT TO "anon" USING (true);
+
+
+
+CREATE POLICY "anon_select_products" ON "public"."products" FOR SELECT TO "anon" USING (("active" = true));
+
+
+
+CREATE POLICY "anon_select_site_settings" ON "public"."site_settings" FOR SELECT TO "anon" USING (true);
+
+
+
+CREATE POLICY "anon_select_stores" ON "public"."stores" FOR SELECT TO "anon" USING (true);
 
 
 
